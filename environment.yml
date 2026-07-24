@@ -1,0 +1,79 @@
+name: groundwater-potential-mapping
+
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  # Core
+  - python=3.11
+  - numpy=1.26.*
+
+  # Earth Engine / Geospatial
+  - earthengine-api
+  - geemap
+  - gdal
+  - rasterio
+  - fiona
+  - pyproj
+  - shapely
+  - geopandas
+  - xarray
+  - rioxarray
+  - pyogrio
+
+  # Terrain & Hydrological Analysis
+  - richdem
+  - pysheds
+  - whitebox
+  - rasterstats
+  - exactextract
+
+  # Scientific Computing
+  - scipy
+  - scikit-image
+  - pandas
+  - openpyxl
+  - pyarrow
+
+  # Multi-Criteria Decision Analysis
+  - scikit-learn
+  - networkx
+
+  # Spatial Statistics
+  - pysal
+  - esda
+  - libpysal
+
+  # Visualization
+  - matplotlib
+  - seaborn
+  - plotly
+  - folium
+  - ipyleaflet
+  - contextily
+
+  # Dashboard / Web Apps
+  - streamlit
+
+  # Jupyter
+  - jupyterlab
+  - notebook
+  - ipywidgets
+  - ipykernel
+
+  # Utilities
+  - tqdm
+  - requests
+  - python-dotenv
+  - pyyaml
+
+  # API Deployment
+  - fastapi
+  - uvicorn
+  - pydantic
+
+  - pip
+  - pip:
+      - geedim
+      - ahpy
