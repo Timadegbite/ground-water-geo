@@ -246,19 +246,19 @@ identified as High or Very High groundwater-potential area.
 
 ### Study Area
 
-`<img src="images/kano-study-area.png" alt="Kano State Study Area" width="650">`{=html}
+`![Kano State Study Area](images/kano-study-area.png)`{=html}
 
 ### Mean Annual Rainfall
 
-`<img src="images/mean-annual-rainfall.png" alt="Mean Annual Rainfall" width="650">`{=html}
+`![Mean Annual Rainfall](images/mean-annual-rainfall.png)`{=html}
 
 ### Groundwater Suitability Layers
 
-`<img src="images/suitability-layers.png" alt="Groundwater Suitability Layers" width="750">`{=html}
+`![Groundwater Suitability Layers](images/suitability-layers.png)`{=html}
 
 ### Final Groundwater Potential Map
 
-`<img src="images/groundwater-potential-zones.png" alt="Groundwater Potential Zones" width="750">`{=html}
+`![Groundwater Potential Zones](images/groundwater-potential-zones.png)`{=html}
 
 ## How to Run the Notebook
 
