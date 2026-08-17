@@ -31,6 +31,7 @@ The project:
   - High
   - Very High
 - Visualises the final groundwater potential map in Google Earth Engine.
+- Identifies High and Very High groundwater-potential areas as priority zones for further groundwater investigation and development.
 
 ## Study Area
 
@@ -105,11 +106,11 @@ Rainfall values are then reclassified into five suitability classes, with higher
 
 ### 5. Drainage Density
 
-MERIT Hydro data is used to derive drainage-related information for the study area.
+MERIT Hydro upstream drainage area data is used to derive an approximate drainage-density surface.
 
-Drainage density is incorporated as a groundwater-potential factor because drainage characteristics influence surface runoff and infiltration.
+A flow-accumulation threshold of 100 km² is used to identify stream pixels. Drainage density is then approximated within a 5 km circular neighbourhood using the MERIT Hydro spatial resolution.
 
-The resulting drainage density layer is reclassified to a 1–5 suitability scale, with lower drainage density receiving higher suitability scores.
+Lower drainage density is assigned higher groundwater suitability because lower drainage density is assumed to provide greater infiltration opportunity relative to surface runoff.
 
 ### 6. Topographic Wetness Index (TWI)
 
@@ -118,6 +119,11 @@ The Topographic Wetness Index (TWI) is derived from hydrological and terrain inf
 The TWI is used as an indicator of relative moisture accumulation and potential water availability.
 
 The resulting TWI layer is reclassified to a 1–5 suitability scale, with higher TWI values receiving higher suitability scores.
+
+TWI is derived as a topographic wetness proxy using MERIT Hydro upstream drainage area and MERIT DEM slope:
+
+```text
+TWI = ln(flow accumulation / tan(slope))
 
 ## Analytic Hierarchy Process (AHP)
 
@@ -193,20 +199,79 @@ The final groundwater potential map uses the following colour scheme:
 | High | Light Green |
 | Very High | Dark Green |
 
+### Groundwater Potential Index Range
+
+The observed Groundwater Potential Index (GWPI) across Kano State ranges from approximately **1.74 to 4.17**.
+
+The observed range is divided into five equal intervals to produce the Very Low, Low, Moderate, High, and Very High groundwater-potential classes.
+
+## Priority Areas for Groundwater Development
+
+Areas classified as **High** and **Very High** groundwater potential are identified as priority zones for further groundwater investigation and development.
+
+These areas represent relatively favourable groundwater-potential conditions based on the selected environmental, topographic, hydrological, soil, and land-cover criteria and the AHP-weighted MCDA model.
+
+The priority zones should not be interpreted as guaranteed productive aquifer locations. Site-specific hydrogeological investigations are recommended before groundwater-development decisions are made.
+
+### Priority Area Statistics
+
+The analysis identified approximately:
+
+- **3,888.48 km²** of High and Very High groundwater-potential areas.
+- **19.36%** of the total Kano study area.
+- **20,082.21 km²** total study area.
+
+
+### Spatial Reference and Resolution
+
+The analysis uses WGS 84 / UTM Zone 32N (EPSG:32632) as the target coordinate reference system and a target spatial scale of 30 m for raster processing and export.
+
+---
+
+#### 5. Document the reclassification methodology
+
+```markdown
+### Reclassification
+
+All seven thematic criteria are converted to a common suitability scale from 1 to 5, where:
+
+- 1 = Very Low suitability
+- 2 = Low suitability
+- 3 = Moderate suitability
+- 4 = High suitability
+- 5 = Very High suitability
+
+Different reclassification approaches are used depending on the thematic variable.
+
+Rainfall and drainage density use percentile-based classification. Elevation, slope, and TWI use predefined thresholds, while land cover and soil texture use class-based suitability assignments.
+
 ## Results
 
-The analysis produces:
+The GIS-based MCDA produced a continuous Groundwater Potential Index (GWPI) and a classified groundwater-potential map for Kano State.
 
-- Seven processed thematic layers.
-- Seven reclassified groundwater suitability layers.
-- AHP-derived criterion weights.
-- AHP consistency assessment.
-- A Groundwater Potential Index (GWPI).
-- A classified groundwater potential map for Kano State.
+The model integrates seven standardized criteria:
 
-The final output identifies areas of Very Low, Low, Moderate, High, and Very High relative groundwater potential across the study area.
+- Rainfall
+- Elevation
+- Slope
+- Land Cover
+- Soil Texture
+- Drainage Density
+- Topographic Wetness Index (TWI)
 
-The groundwater potential map is intended as a spatial screening and prioritisation product. It does not replace detailed hydrogeological investigation, geophysical surveys, borehole information, pumping tests, or field validation.
+The AHP analysis produced a Consistency Ratio of **0.0139**, which is below the commonly accepted threshold of 0.10.
+
+The resulting GWPI ranges from approximately **1.74 to 4.17** and is classified into five relative groundwater-potential categories:
+
+- Very Low
+- Low
+- Moderate
+- High
+- Very High
+
+Approximately **3,888.48 km²**, representing **19.36%** of the **20,082.21 km²** study area, was identified as High or Very High groundwater-potential area.
+
+These areas were subsequently extracted as priority zones for further groundwater investigation and development.
 
 ## How to Run the Notebook
 
@@ -316,6 +381,66 @@ The final Groundwater Potential Index is classified into five groundwater potent
 - Very High
 
 ![Groundwater Potential Zones](images/groundwater-potential-zones.png)
+
+## Limitations
+
+The groundwater-potential assessment has several limitations:
+
+1. The model uses seven selected criteria and does not explicitly incorporate geology, aquifer characteristics, groundwater levels, fracture and lineament distribution, hydraulic properties, or recharge conditions.
+
+2. The AHP weights depend on expert judgment and assumptions used to construct the pairwise comparison matrix.
+
+3. The weighted linear combination assumes additive relationships between the criteria, whereas groundwater systems can involve complex nonlinear interactions.
+
+4. Differences in spatial resolution, data quality, temporal characteristics, and classification accuracy between input datasets introduce uncertainty.
+
+5. Reclassification thresholds and percentile-based classifications can influence the resulting spatial distribution.
+
+6. The final groundwater-potential zones have not been independently validated against borehole yields, groundwater levels, pumping tests, geophysical surveys, or other direct hydrogeological measurements.
+
+## Recommendations
+
+- Prioritise High and Very High groundwater-potential areas for field investigation and hydrogeological verification.
+- Incorporate geology, aquifer characteristics, groundwater levels, borehole yields, geophysical surveys, and other hydrogeological information in future assessments.
+- Validate the groundwater-potential zones using independent borehole, pumping-test, groundwater-level, or geophysical data.
+- Use higher-resolution and locally validated datasets where available.
+- Conduct sensitivity analysis to assess how changes in criterion weights and suitability thresholds affect the results.
+- Consider groundwater demand, recharge, abstraction pressure, and long-term resource sustainability when planning groundwater development.
+- Use the final map as a screening and prioritisation tool rather than as a standalone basis for borehole siting.
+
+## Data Export
+
+The notebook includes reusable Google Earth Engine export functions for saving raster and vector outputs to Google Drive.
+
+### Study Area
+
+The Kano State study-area boundary can be exported as a Shapefile.
+
+### Thematic Layers
+
+The original thematic layers can be exported as GeoTIFF files:
+
+- Rainfall
+- Elevation
+- Slope
+- Land Cover
+- Soil Texture
+- Drainage Density
+- TWI
+
+### Suitability Layers
+
+The seven reclassified suitability layers can be exported as GeoTIFF files.
+
+### Final Outputs
+
+The final MCDA outputs include:
+
+- Groundwater Potential Index (GWPI)
+- Groundwater Potential Zones
+- Priority Groundwater Areas
+
+The raster exports use a target scale of 30 m and EPSG:32632.
 
 
 ## Contributors
